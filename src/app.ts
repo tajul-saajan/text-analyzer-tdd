@@ -8,9 +8,9 @@ import helmet from 'helmet';
 // import morgan from 'morgan';
 // import swaggerJSDoc from 'swagger-jsdoc';
 // import swaggerUi from 'swagger-ui-express';
-import { NODE_ENV, PORT, LOG_FORMAT, ORIGIN, CREDENTIALS } from '@config';
 import { Routes } from '@interfaces/route.interface';
 import { ErrorMiddleware } from '@middlewares/error.middleware';
+import { NODE_ENV, PORT, ORIGIN, CREDENTIALS } from '@config';
 // import { logger, stream } from '@utils/logger';
 
 export class App {
