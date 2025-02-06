@@ -19,8 +19,10 @@
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "helmet": "^8.0.0",
+    "mysql2": "^3.12.0",
     "reflect-metadata": "^0.2.2",
-    "typedi": "^0.10.0"
+    "typedi": "^0.10.0",
+    "typeorm": "^0.3.20"
   },
   "devDependencies": {
     "@swc/cli": "^0.6.0",
