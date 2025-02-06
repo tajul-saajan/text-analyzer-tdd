@@ -52,7 +52,6 @@ export class App {
     });
   }
 
-
   private initializeErrorHandling() {
     this.app.use(ErrorMiddleware);
   }

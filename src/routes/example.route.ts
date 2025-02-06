@@ -11,7 +11,7 @@ export class ExampleRoute implements Routes {
 
   private initializeRoutes() {
     this.router.get(`${this.path}hello`, (req, res) => {
-        res.json('hello Express.js');
+      res.json('hello Express.js');
     });
   }
 }
