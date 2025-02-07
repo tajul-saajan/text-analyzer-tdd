@@ -5,6 +5,7 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { Service } from 'typedi';
 import { SECRET_KEY } from '@config';
+import { UserLoginDto } from '@dtos/user-login.dto';
 
 @Service()
 export class AuthService {
@@ -25,6 +26,24 @@ export class AuthService {
     await newUser.save();
 
     const token = jwt.sign({ userId: newUser.id }, SECRET_KEY, { expiresIn: '1h' });
+
+    return token;
+  }
+
+  async login(dto: UserLoginDto) {
+    const { email, password } = dto;
+
+    const user = await User.findOne({ where: { email } });
+    if (!user) {
+      throw new HttpException(400, 'Invalid credentials');
+    }
+
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+      throw new HttpException(400, 'Invalid credentials');
+    }
+
+    const token = jwt.sign({ userId: user.id }, 'your_jwt_secret', { expiresIn: '1h' });
 
     return token;
   }
