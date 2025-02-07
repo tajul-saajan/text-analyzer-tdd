@@ -14,6 +14,7 @@ export class TextRoute implements Routes {
   }
 
   private initializeRoutes() {
+    this.router.get(`${this.path}`, this.textController.getTexts);
     this.router.post(`${this.path}`, this.textController.createText);
   }
 }

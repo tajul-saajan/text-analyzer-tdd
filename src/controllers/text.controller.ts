@@ -11,6 +11,13 @@ export class TextController {
     this.textService = Container.get(TextService);
   }
 
+  public getTexts = async (req: Request, res: Response) => {
+    const { page = 1, per_page = 10 } = req.query;
+
+    const texts = await this.textService.getAllTexts(+page, +per_page);
+    res.status(200).json(texts);
+  };
+
   public createText = async (req: Request, res: Response) => {
     try {
       const dto = await validateRequest(TextCreateDto, req.body, res);
