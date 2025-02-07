@@ -3,6 +3,8 @@ import { App } from '@/app';
 import { TextRoute } from '@routes/text.route';
 import { getRepository, Repository } from 'typeorm';
 import { Text } from '@/entities/text';
+import { TextService } from '@services/textService';
+import { HttpException } from '@exceptions/httpException';
 
 describe('Text create Tests', () => {
   let app: App;
@@ -156,5 +158,23 @@ describe('Text API Delete Tests', () => {
 
     expect(response.status).toBe(404);
     expect(response.body.message).toBe('Text not found');
+  });
+});
+
+describe('Text get functionality', () => {
+  let textService: TextService;
+
+  beforeAll(async () => {
+    textService = new TextService();
+  });
+
+  it('should get the text with correct id', async () => {
+    const text = await textService.getText(106);
+
+    expect(text).toHaveProperty('id');
+  });
+
+  it('should get the text with incorrect id', async () => {
+    await expect(textService.getText(999)).rejects.toThrow(HttpException);
   });
 });
