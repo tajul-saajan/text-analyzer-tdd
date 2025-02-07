@@ -93,3 +93,42 @@ describe('Text list with Pagination Tests', () => {
     expect(response.body.per_page).toBe(10);
   });
 });
+
+describe('Text update API Tests', () => {
+  let app: App;
+
+  beforeAll(async () => {
+    app = new App([new TextRoute()]);
+  });
+
+  beforeEach(async () => {
+    const repository = getRepository(Text);
+    await repository.clear();
+
+    await repository.save({
+      content: 'Original content for testing',
+    });
+  });
+
+  it('should update text content successfully', async () => {
+    const updatedContent = {
+      content: 'Updated content after modification',
+    };
+
+    const response = await request(app.getServer()).put('/texts/1').send(updatedContent).set('Accept', 'application/json');
+
+    expect(response.status).toBe(202);
+    expect(response.body.content).toBe(updatedContent.content);
+  });
+
+  it('should return 404 for non-existent text id', async () => {
+    const updatedContent = {
+      content: 'This should fail',
+    };
+
+    const response = await request(app.getServer()).put('/texts/999').send(updatedContent).set('Accept', 'application/json');
+
+    expect(response.status).toBe(404);
+    expect(response.body.message).toBe('Text not found');
+  });
+});

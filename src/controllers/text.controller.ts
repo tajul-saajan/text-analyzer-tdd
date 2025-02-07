@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { Container } from 'typedi';
 import { TextService } from '@services/textService';
 import { validateRequest } from '@utils/validateRequest';
@@ -25,6 +25,17 @@ export class TextController {
       res.status(201).json(text);
     } catch (err) {
       res.status(400).json(err);
+    }
+  };
+
+  public updateText = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { id } = req.params;
+      const dto = await validateRequest<TextCreateDto>(TextCreateDto, req.body, res);
+      const text = await this.textService.updateText(+id, dto);
+      res.status(202).json(text);
+    } catch (e) {
+      next(e);
     }
   };
 }
