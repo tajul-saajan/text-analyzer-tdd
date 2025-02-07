@@ -2,7 +2,7 @@ import request from 'supertest';
 import { App } from '@/app';
 import { ExampleRoute } from '@routes/example.route';
 
-describe('User CRUD Operations', () => {
+describe('Example Text', () => {
   let app: App;
 
   beforeAll(() => {
