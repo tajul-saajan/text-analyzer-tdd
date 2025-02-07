@@ -23,4 +23,18 @@ export class TextAnalysisController {
       next(e);
     }
   };
+
+  public getCharacterCount = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { text_id } = req.params;
+      const { include_whitespace = 0 } = req.query;
+
+      const text = await this.textService.getText(+text_id);
+      const char_count = this.textAnalysisService.getCharacterCount(text.content, Boolean(+include_whitespace));
+
+      res.status(200).json({ char_count });
+    } catch (e) {
+      next(e);
+    }
+  };
 }
