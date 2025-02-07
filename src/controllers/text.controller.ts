@@ -18,13 +18,13 @@ export class TextController {
     res.status(200).json(texts);
   };
 
-  public createText = async (req: Request, res: Response) => {
+  public createText = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const dto = await validateRequest(TextCreateDto, req.body, res);
       const text = await this.textService.createText(dto);
       res.status(201).json(text);
     } catch (err) {
-      res.status(400).json(err);
+      next(err);
     }
   };
 
