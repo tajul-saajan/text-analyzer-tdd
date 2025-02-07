@@ -37,4 +37,17 @@ export class TextAnalysisController {
       next(e);
     }
   };
+
+  public getSentenceCount = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { text_id } = req.params;
+
+      const text = await this.textService.getText(+text_id);
+      const sentence_count = this.textAnalysisService.getSentenceCount(text.content);
+
+      res.status(200).json({ sentence_count });
+    } catch (e) {
+      next(e);
+    }
+  };
 }

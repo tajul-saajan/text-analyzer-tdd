@@ -16,7 +16,7 @@ export class TextAnalysisRoute implements Routes {
   private initializeRoutes() {
     this.router.get(`${this.path}/:text_id/word_count`, this.textAnalysisController.getWordCount);
     this.router.get(`${this.path}/:text_id/char_count`, this.textAnalysisController.getCharacterCount);
-    // this.router.get(`${this.path}/:text_id/sentence_count`, this.textAnalysisController.getTexts);
+    this.router.get(`${this.path}/:text_id/sentence_count`, this.textAnalysisController.getSentenceCount);
     // this.router.get(`${this.path}/:text_id/longest_words`, this.textAnalysisController.getTexts);
   }
 }

@@ -15,4 +15,15 @@ export class TextAnalysisService {
     const withOutWhiteSpace = content.replace(/\s+/g, '');
     return withOutWhiteSpace.length;
   }
+
+  getSentenceCount(content: string) {
+    if (!content) return 0;
+
+    const sentences = content
+      .trim()
+      .split(/[.!?]+/)
+      .filter(Boolean);
+
+    return sentences.length;
+  }
 }
