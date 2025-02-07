@@ -19,4 +19,16 @@ describe('Text CRUD Operations', () => {
     const response = await request(app.getServer()).post('/texts').send({});
     expect(response.status).toBe(400);
   });
+
+  it('should return 422 for invalid content (empty)', async () => {
+    const newText = {
+      content: '',
+    };
+
+    const response = await request(app.getServer()).post('/texts').send(newText).set('Accept', 'application/json');
+
+    expect(response.status).toBe(422);
+    expect(response.body.message).toBe('Validation failed');
+    expect(response.body.errors[0].constraints.isNotEmpty).toBe('Content must not be empty');
+  });
 });
