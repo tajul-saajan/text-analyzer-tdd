@@ -38,4 +38,15 @@ export class TextController {
       next(e);
     }
   };
+
+  deleteText = async (req: Request, res: Response, next: NextFunction) => {
+    const { id } = req.params;
+
+    try {
+      const result = await this.textService.deleteText(Number(id));
+      res.status(204).json(result);
+    } catch (e) {
+      next(e);
+    }
+  };
 }

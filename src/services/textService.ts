@@ -36,4 +36,13 @@ export class TextService {
     text.content = dto.content;
     return await text.save();
   }
+
+  async deleteText(id: number) {
+    const text = await Text.findOne({ where: { id } });
+    if (!text) {
+      throw new HttpException(404, 'Text not found');
+    }
+
+    await text.remove();
+  }
 }

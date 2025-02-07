@@ -1,7 +1,7 @@
 import request from 'supertest';
 import { App } from '@/app';
 import { TextRoute } from '@routes/text.route';
-import { getRepository } from 'typeorm';
+import { getRepository, Repository } from 'typeorm';
 import { Text } from '@/entities/text';
 
 describe('Text create Tests', () => {
@@ -35,6 +35,14 @@ describe('Text create Tests', () => {
   });
 });
 
+async function createTexts(repository: Repository<Text>, count: number) {
+  for (let i = 1; i <= count; i++) {
+    await repository.save({
+      content: `Text content ${i}`,
+    });
+  }
+}
+
 describe('Text list with Pagination Tests', () => {
   let app: App;
 
@@ -46,11 +54,7 @@ describe('Text list with Pagination Tests', () => {
     const repository = getRepository(Text);
     await repository.clear();
 
-    for (let i = 1; i <= 50; i++) {
-      await repository.save({
-        content: `Text content ${i}`,
-      });
-    }
+    await createTexts(repository, 50);
   });
 
   it('should return the first page with a default page size of 10', async () => {
@@ -105,9 +109,7 @@ describe('Text update API Tests', () => {
     const repository = getRepository(Text);
     await repository.clear();
 
-    await repository.save({
-      content: 'Original content for testing',
-    });
+    await createTexts(repository, 50);
   });
 
   it('should update text content successfully', async () => {
@@ -127,6 +129,34 @@ describe('Text update API Tests', () => {
     };
 
     const response = await request(app.getServer()).put('/texts/999').send(updatedContent).set('Accept', 'application/json');
+
+    expect(response.status).toBe(404);
+    expect(response.body.message).toBe('Text not found');
+  });
+});
+
+describe('Text API Delete Tests', () => {
+  let app: App;
+
+  beforeAll(async () => {
+    app = new App([new TextRoute()]);
+  });
+
+  beforeEach(async () => {
+    const repository = getRepository(Text);
+    await repository.clear();
+
+    await createTexts(repository, 5);
+  });
+
+  it('should delete text successfully', async () => {
+    const response = await request(app.getServer()).delete('/texts/1').set('Accept', 'application/json');
+
+    expect(response.status).toBe(204);
+  });
+
+  it('should return 404 for non-existent text id', async () => {
+    const response = await request(app.getServer()).delete('/texts/999').set('Accept', 'application/json');
 
     expect(response.status).toBe(404);
     expect(response.body.message).toBe('Text not found');

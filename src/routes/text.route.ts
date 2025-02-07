@@ -17,5 +17,6 @@ export class TextRoute implements Routes {
     this.router.get(`${this.path}`, this.textController.getTexts);
     this.router.post(`${this.path}`, this.textController.createText);
     this.router.put(`${this.path}/:id`, this.textController.updateText);
+    this.router.delete(`${this.path}/:id`, this.textController.deleteText);
   }
 }
