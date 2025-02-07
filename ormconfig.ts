@@ -12,7 +12,6 @@ const config: ConnectionOptions = {
   database: process.env.DB_DATABASE,
   entities: ['src/entities/*.ts'],
   synchronize: true,
-  logging: true,
 };
 
 export default config;

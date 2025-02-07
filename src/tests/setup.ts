@@ -11,7 +11,7 @@ beforeAll(async () => {
     database: ':memory:',
     synchronize: true,
     logging: false,
-    entities: [],
+    entities: [__dirname + '/../entities/*.ts'],
   });
 });
 
