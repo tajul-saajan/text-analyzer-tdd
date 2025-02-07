@@ -63,4 +63,17 @@ export class TextAnalysisController {
       next(e);
     }
   };
+
+  public getLongestWordsInParagraphs = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { text_id } = req.params;
+
+      const text = await this.textService.getText(+text_id);
+      const longest_words = this.textAnalysisService.getLongestWordForEachParagraph(text.content);
+
+      res.status(200).json({ longest_words });
+    } catch (e) {
+      next(e);
+    }
+  };
 }

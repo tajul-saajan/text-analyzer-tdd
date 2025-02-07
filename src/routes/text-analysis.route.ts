@@ -18,6 +18,6 @@ export class TextAnalysisRoute implements Routes {
     this.router.get(`${this.path}/:text_id/char_count`, this.textAnalysisController.getCharacterCount);
     this.router.get(`${this.path}/:text_id/sentence_count`, this.textAnalysisController.getSentenceCount);
     this.router.get(`${this.path}/:text_id/paragraph_count`, this.textAnalysisController.getParagraphCount);
-    // this.router.get(`${this.path}/:text_id/longest_words`, this.textAnalysisController.getTexts);
+    this.router.get(`${this.path}/:text_id/longest_words`, this.textAnalysisController.getLongestWordsInParagraphs);
   }
 }
