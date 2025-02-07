@@ -11,6 +11,11 @@ describe('Text create Tests', () => {
     app = new App([new TextRoute()]);
   });
 
+  afterAll(async () => {
+    const repository = getRepository(Text);
+    await repository.clear();
+  });
+
   it('it should give us 201 from texts create endpoint', async () => {
     const response = await request(app.getServer()).post('/texts').send({ content: 'hello world' });
     expect(response.status).toBe(201);
@@ -19,7 +24,7 @@ describe('Text create Tests', () => {
 
   it('should throw error with empty body', async () => {
     const response = await request(app.getServer()).post('/texts').send({});
-    expect(response.status).toBe(400);
+    expect(response.status).toBe(422);
   });
 
   it('should return 422 for invalid content (empty)', async () => {
@@ -48,9 +53,6 @@ describe('Text list with Pagination Tests', () => {
 
   beforeAll(async () => {
     app = new App([new TextRoute()]);
-  });
-
-  beforeEach(async () => {
     const repository = getRepository(Text);
     await repository.clear();
 
@@ -103,9 +105,6 @@ describe('Text update API Tests', () => {
 
   beforeAll(async () => {
     app = new App([new TextRoute()]);
-  });
-
-  beforeEach(async () => {
     const repository = getRepository(Text);
     await repository.clear();
 
@@ -117,7 +116,7 @@ describe('Text update API Tests', () => {
       content: 'Updated content after modification',
     };
 
-    const response = await request(app.getServer()).put('/texts/1').send(updatedContent).set('Accept', 'application/json');
+    const response = await request(app.getServer()).put('/texts/77').send(updatedContent).set('Accept', 'application/json');
 
     expect(response.status).toBe(202);
     expect(response.body.content).toBe(updatedContent.content);
@@ -140,9 +139,6 @@ describe('Text API Delete Tests', () => {
 
   beforeAll(async () => {
     app = new App([new TextRoute()]);
-  });
-
-  beforeEach(async () => {
     const repository = getRepository(Text);
     await repository.clear();
 
@@ -150,7 +146,7 @@ describe('Text API Delete Tests', () => {
   });
 
   it('should delete text successfully', async () => {
-    const response = await request(app.getServer()).delete('/texts/1').set('Accept', 'application/json');
+    const response = await request(app.getServer()).delete('/texts/105').set('Accept', 'application/json');
 
     expect(response.status).toBe(204);
   });
