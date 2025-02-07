@@ -45,4 +45,13 @@ export class TextService {
 
     await text.remove();
   }
+
+  async getText(id: number) {
+    const text = await Text.findOne({ where: { id } });
+    if (!text) {
+      throw new HttpException(404, 'Text not found');
+    }
+
+    return text;
+  }
 }
