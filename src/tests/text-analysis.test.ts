@@ -91,3 +91,41 @@ describe('Character Count Tests', () => {
     expect(characterCount).toBe(0); // Null input should return 0
   });
 });
+
+describe('Sentence Count Tests', () => {
+  let textAnalysisService: TextAnalysisService;
+
+  beforeEach(() => {
+    textAnalysisService = new TextAnalysisService();
+  });
+
+  it('should count sentences in a valid text', () => {
+    const text = 'This is a sentence. This is another sentence. And a third one!';
+    const sentenceCount = textAnalysisService.getSentenceCount(text);
+    expect(sentenceCount).toBe(3);
+  });
+
+  it('should return 0 for an empty string', () => {
+    const text = '';
+    const sentenceCount = textAnalysisService.getSentenceCount(text);
+    expect(sentenceCount).toBe(0);
+  });
+
+  it('should return 0 for a string with only spaces', () => {
+    const text = '    ';
+    const sentenceCount = textAnalysisService.getSentenceCount(text);
+    expect(sentenceCount).toBe(0);
+  });
+
+  it('should count sentences correctly with multiple spaces', () => {
+    const text = 'This is a sentence    .   This is another one.';
+    const sentenceCount = textAnalysisService.getSentenceCount(text);
+    expect(sentenceCount).toBe(2);
+  });
+
+  it('should count sentences correctly with punctuation at the end', () => {
+    const text = 'Hello! How are you? I am fine.';
+    const sentenceCount = textAnalysisService.getSentenceCount(text);
+    expect(sentenceCount).toBe(3);
+  });
+});
