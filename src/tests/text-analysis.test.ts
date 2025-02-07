@@ -167,3 +167,35 @@ describe('Paragraph Count Tests', () => {
     expect(paragraphCount).toBe(2);
   });
 });
+
+describe('TextAnalysisService', () => {
+  let textAnalysisService: TextAnalysisService;
+
+  beforeEach(() => {
+    textAnalysisService = new TextAnalysisService();
+  });
+
+  it('should find the longest word in each paragraph', () => {
+    const text = 'This is the first paragraph\nThe longest word in this second para.\nShort paragraph';
+    const longestWords = textAnalysisService.getLongestWordForEachParagraph(text);
+    expect(longestWords.map(r => r.longest_word)).toEqual(['paragraph', 'longest', 'paragraph']);
+  });
+
+  it('should return an empty array for an empty string', () => {
+    const text = '';
+    const longestWords = textAnalysisService.getLongestWordForEachParagraph(text);
+    expect(longestWords).toEqual([]);
+  });
+
+  it('should return an empty array for a string with only spaces', () => {
+    const text = '    ';
+    const longestWords = textAnalysisService.getLongestWordForEachParagraph(text);
+    expect(longestWords).toEqual([]);
+  });
+
+  it('should find the longest word correctly in a single paragraph with multiple spaces', () => {
+    const text = 'This is a paragraph  with multiple  spaces  ';
+    const longestWords = textAnalysisService.getLongestWordForEachParagraph(text);
+    expect(longestWords.map(r => r.longest_word)).toEqual(['paragraph']);
+  });
+});
