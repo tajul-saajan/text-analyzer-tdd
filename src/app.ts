@@ -1,17 +1,12 @@
 import 'reflect-metadata';
-import compression from 'compression';
-// import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import express from 'express';
 import helmet from 'helmet';
-// import hpp from 'hpp';
-// import morgan from 'morgan';
-// import swaggerJSDoc from 'swagger-jsdoc';
-// import swaggerUi from 'swagger-ui-express';
 import { Routes } from '@interfaces/route.interface';
 import { ErrorMiddleware } from '@middlewares/error.middleware';
 import { NODE_ENV, PORT, ORIGIN, CREDENTIALS } from '@config';
-// import { logger, stream } from '@utils/logger';
+import passport from 'passport';
+import { jwtStrategy } from '@middlewares/passport';
 
 export class App {
   public app: express.Application;
@@ -22,6 +17,9 @@ export class App {
     this.app = express();
     this.env = NODE_ENV || 'development';
     this.port = PORT || 3000;
+
+    this.app.use(passport.initialize());
+    jwtStrategy(passport);
 
     this.initializeMiddlewares();
     this.initializeRoutes(routes);

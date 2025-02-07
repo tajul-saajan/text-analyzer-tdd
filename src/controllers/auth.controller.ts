@@ -33,4 +33,8 @@ export class AuthController {
       next(e);
     }
   };
+
+  public getProfile = async (req: Request, res: Response) => {
+    res.status(200).json({ message: 'Profile accessed', user: req.user });
+  };
 }
