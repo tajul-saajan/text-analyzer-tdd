@@ -50,4 +50,17 @@ export class TextAnalysisController {
       next(e);
     }
   };
+
+  public getParagraphCount = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { text_id } = req.params;
+
+      const text = await this.textService.getText(+text_id);
+      const paragraph_count = this.textAnalysisService.getParagraphCount(text.content);
+
+      res.status(200).json({ paragraph_count });
+    } catch (e) {
+      next(e);
+    }
+  };
 }

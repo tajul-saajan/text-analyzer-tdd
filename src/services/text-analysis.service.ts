@@ -26,4 +26,14 @@ export class TextAnalysisService {
 
     return sentences.length;
   }
+
+  getParagraphCount(content: string) {
+    const paragraphs = this.getParagraphs(content);
+    return paragraphs.length;
+  }
+
+  private getParagraphs(content: string) {
+    if (!content) return [];
+    return content.trim().split(/\n+/).filter(Boolean);
+  }
 }
