@@ -32,6 +32,7 @@
       "@services/*": ["services/*"],
       "@utils/*": ["utils/*"],
       "@tests/*": ["tests/*"],
+      "@seeders/*": ["seeders/*"]
     }
   },
   "include": ["src/**/*.ts", "src/**/*.json", ".env"],

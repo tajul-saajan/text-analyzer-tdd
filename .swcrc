@@ -30,7 +30,8 @@
       "@routes/*": ["routes/*"],
       "@services/*": ["services/*"],
       "@utils/*": ["utils/*"],
-      "@tests/*": ["tests/*"]
+      "@tests/*": ["tests/*"],
+      "@seeders/*": ["seeders/*"]
     }
   },
   "module": {
