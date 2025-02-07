@@ -129,3 +129,41 @@ describe('Sentence Count Tests', () => {
     expect(sentenceCount).toBe(3);
   });
 });
+
+describe('Paragraph Count Tests', () => {
+  let textAnalysisService: TextAnalysisService;
+
+  beforeEach(() => {
+    textAnalysisService = new TextAnalysisService();
+  });
+
+  it('should count paragraphs in a valid text', () => {
+    const text = 'This is the first paragraph.\nThis is the second paragraph.\nThis is the third paragraph.';
+    const paragraphCount = textAnalysisService.getParagraphCount(text);
+    expect(paragraphCount).toBe(3);
+  });
+
+  it('should return 0 for an empty string', () => {
+    const text = '';
+    const paragraphCount = textAnalysisService.getParagraphCount(text);
+    expect(paragraphCount).toBe(0);
+  });
+
+  it('should return 0 for a string with only spaces', () => {
+    const text = '    ';
+    const paragraphCount = textAnalysisService.getParagraphCount(text);
+    expect(paragraphCount).toBe(0);
+  });
+
+  it('should count paragraphs correctly with multiple newlines', () => {
+    const text = 'This is the first paragraph.\n\nThis is the second paragraph.\n\n\nThis is the third paragraph.';
+    const paragraphCount = textAnalysisService.getParagraphCount(text);
+    expect(paragraphCount).toBe(3);
+  });
+
+  it('should count paragraphs correctly with leading and trailing newlines', () => {
+    const text = '\nThis is the first paragraph.\nThis is the second paragraph.\n\n';
+    const paragraphCount = textAnalysisService.getParagraphCount(text);
+    expect(paragraphCount).toBe(2);
+  });
+});
