@@ -7,6 +7,7 @@ import { ErrorMiddleware } from '@middlewares/error.middleware';
 import { NODE_ENV, PORT, ORIGIN, CREDENTIALS } from '@config';
 import passport from 'passport';
 import { jwtStrategy } from '@middlewares/passport';
+import { requestLogger } from '@/middlewares/logger.middleware';
 
 export class App {
   public app: express.Application;
@@ -18,6 +19,7 @@ export class App {
     this.env = NODE_ENV || 'development';
     this.port = PORT || 3000;
 
+    this.app.use(requestLogger);
     this.app.use(passport.initialize());
     jwtStrategy(passport);
 
