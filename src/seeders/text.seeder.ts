@@ -1,6 +1,6 @@
 import { getRepository } from 'typeorm';
 import { faker } from '@faker-js/faker';
-import { Text } from '../entities/text';
+import { Text } from '@/entities/text';
 
 export class TextSeeder {
   static async seed(numRecords: number = 10): Promise<void> {
