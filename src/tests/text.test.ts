@@ -5,12 +5,14 @@ import { getRepository, Repository } from 'typeorm';
 import { Text } from '@/entities/text';
 import { TextService } from '@services/textService';
 import { HttpException } from '@exceptions/httpException';
+import passport from 'passport';
 
 describe('Text create Tests', () => {
   let app: App;
 
   beforeAll(async () => {
     app = new App([new TextRoute()]);
+    jest.spyOn(passport, 'authenticate').mockImplementation((strategy: string, options?: any) => (req, res, next) => next());
   });
 
   afterAll(async () => {
@@ -55,6 +57,7 @@ describe('Text list with Pagination Tests', () => {
 
   beforeAll(async () => {
     app = new App([new TextRoute()]);
+    jest.spyOn(passport, 'authenticate').mockImplementation((strategy: string, options?: any) => (req, res, next) => next());
     const repository = getRepository(Text);
     await repository.clear();
 
@@ -111,6 +114,8 @@ describe('Text update API Tests', () => {
     await repository.clear();
 
     await createTexts(repository, 50);
+
+    jest.spyOn(passport, 'authenticate').mockImplementation((strategy: string, options?: any) => (req, res, next) => next());
   });
 
   it('should update text content successfully', async () => {
@@ -141,6 +146,7 @@ describe('Text API Delete Tests', () => {
 
   beforeAll(async () => {
     app = new App([new TextRoute()]);
+    jest.spyOn(passport, 'authenticate').mockImplementation((strategy: string, options?: any) => (req, res, next) => next());
     const repository = getRepository(Text);
     await repository.clear();
 
