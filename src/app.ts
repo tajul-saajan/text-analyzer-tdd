@@ -8,6 +8,7 @@ import { NODE_ENV, PORT, ORIGIN, CREDENTIALS } from '@config';
 import passport from 'passport';
 import { jwtStrategy } from '@middlewares/passport';
 import { requestLogger } from '@/middlewares/logger.middleware';
+import slowDown from 'express-slow-down';
 
 export class App {
   public app: express.Application;
@@ -22,6 +23,14 @@ export class App {
     this.app.use(requestLogger);
     this.app.use(passport.initialize());
     jwtStrategy(passport);
+
+    const speedLimiter = slowDown({
+      windowMs: 60 * 1000,
+      delayAfter: 100,
+      delayMs: 500,
+    });
+
+    this.app.use(speedLimiter);
 
     this.initializeMiddlewares();
     this.initializeRoutes(routes);
