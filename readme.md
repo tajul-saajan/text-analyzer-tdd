@@ -1,4 +1,10 @@
 # Text Analyzer
+This is basic text analyzer tool that finds word count, character count, sentences count, paragraph count and largest length word for each paragraph.
+## Features:
+- User registration
+- User Login
+- Text CRUD
+- Text Analysis
 
 ## Prerequisites
 
@@ -7,6 +13,19 @@ Before you begin, ensure you have the following installed:
 - **Node.js**
 - **npm**
 - **Database**: **MySQL**
+- **Cache**: **Redis**
+
+### Technologies Used
+- node.js (version 21)
+- express.js
+- typescript
+- typeorm
+- ioredis
+- passport.js
+- es-lint
+- prettier
+- jest
+- typedi (for Dependency Injection)
 
 ## Getting Started
 
