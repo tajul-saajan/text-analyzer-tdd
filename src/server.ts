@@ -6,10 +6,11 @@ import { createConnection } from 'typeorm';
 import config from '../ormconfig';
 import { TextAnalysisRoute } from '@routes/text-analysis.route';
 import { AuthRoute } from '@routes/auth.route';
+import { ReportRoute } from '@routes/report.route';
 
 ValidateEnv();
 
-const routes = [new ExampleRoute(), new TextRoute(), new TextAnalysisRoute(), new AuthRoute()];
+const routes = [new ExampleRoute(), new TextRoute(), new TextAnalysisRoute(), new AuthRoute(), new ReportRoute()];
 const app = new App(routes);
 createConnection(config).then(() => {
   app.listen();

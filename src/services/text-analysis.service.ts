@@ -58,4 +58,20 @@ export class TextAnalysisService {
       };
     });
   }
+
+  performFullAnalysis(content: string) {
+    const word_count = this.getWordCount(content);
+    const character_count = this.getCharacterCount(content);
+    const sentence_count = this.getSentenceCount(content);
+    const paragraph_count = this.getParagraphCount(content);
+    const largest_words = this.getLongestWordForEachParagraph(content);
+
+    return {
+      word_count,
+      character_count,
+      sentence_count,
+      paragraph_count,
+      largest_words,
+    };
+  }
 }
