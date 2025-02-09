@@ -16,9 +16,9 @@ export class TextAnalysisController {
     try {
       const { text_id } = req.params;
       const text = await this.textService.getText(+text_id);
-      const data = this.textAnalysisService.getWordCount(text.content);
+      const word_count = this.textAnalysisService.getWordCount(text.content);
 
-      res.status(200).json(data);
+      res.status(200).json({ word_count });
     } catch (e) {
       next(e);
     }

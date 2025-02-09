@@ -3,8 +3,7 @@ import { Service } from 'typedi';
 @Service()
 export class TextAnalysisService {
   getWordCount(content: string = '') {
-    const word_count = this.getWords(content).length;
-    return { word_count };
+    return this.getWords(content).length;
   }
 
   private getWords(content: string) {
