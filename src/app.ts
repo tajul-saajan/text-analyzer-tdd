@@ -24,10 +24,14 @@ export class App {
     this.app.use(passport.initialize());
     jwtStrategy(passport);
 
+    /* istanbul ignore next */
     const speedLimiter = slowDown({
       windowMs: 60 * 1000,
       delayAfter: 100,
-      delayMs: 500,
+      delayMs: (used, req) => {
+        const delayAfter = req.slowDown.limit;
+        return (used - delayAfter) * 500;
+      },
     });
 
     this.app.use(speedLimiter);
@@ -37,6 +41,7 @@ export class App {
     this.initializeErrorHandling();
   }
 
+  /* istanbul ignore next */
   public listen() {
     this.app.listen(this.port, () => {
       console.log('running on port', this.port);

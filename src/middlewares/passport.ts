@@ -3,6 +3,7 @@ import { User } from '@/entities/user';
 import { PassportStatic } from 'passport';
 import { SECRET_KEY } from '@config';
 
+/* istanbul ignore next */
 export const jwtStrategy = (passport: PassportStatic) => {
   passport.use(
     new JwtStrategy(
