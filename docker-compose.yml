@@ -10,9 +10,28 @@ services:
       - ${EXPOSE_PORT:-5050}:${PORT:-5050}
     depends_on:
       - redis
+      - mysql
   redis:
     image: redis
     env_file:
       - .env
     ports:
       - ${REDIS_EXPOSE_PORT:-6379}:${REDIS_PORT:-6379}
+    volumes:
+      - redis_data:/data
+  mysql:
+    image: mysql
+    env_file:
+      - .env
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE:-textanalyzer}
+      MYSQL_USER: ${DB_USERNAME:-user}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-password}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-password}
+    ports:
+      - ${DB_EXPOSE_PORT:-3306}:${DB_PORT:-3306}
+    volumes:
+      - mysql_data:/var/lib/mysql
+volumes:
+    redis_data:
+    mysql_data:
