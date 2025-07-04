@@ -1,0 +1,25 @@
+name: CI - Docker Compose Test
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Set up Docker Compose
+        run: docker-compose up -d
+
+      - name: Seed Database
+        run: docker compose exec app npm run db:seed
+    
+      - name: Run Tests
+        run: docker compose exec app npm run test
+
+      - name: Tear down
+        run: docker-compose down -v
