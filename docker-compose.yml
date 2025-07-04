@@ -11,6 +11,9 @@ services:
     depends_on:
       - redis
       - mysql
+    volumes:
+      - .:/app
+      - /app/node_modules
   redis:
     image: redis
     env_file:
