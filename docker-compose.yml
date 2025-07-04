@@ -1,0 +1,18 @@
+
+services:
+  app:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    ports:
+      - ${EXPOSE_PORT:-5050}:${PORT:-5050}
+    depends_on:
+      - redis
+  redis:
+    image: redis
+    env_file:
+      - .env
+    ports:
+      - ${REDIS_EXPOSE_PORT:-6379}:${REDIS_PORT:-6379}
