@@ -32,6 +32,9 @@ jobs:
       - name: Set up Docker Compose
         run: docker compose up -d
 
+      - name: Wait for services to be ready
+        run: sleep 30
+
       - name: Seed Database
         run: docker compose exec app npm run db:seed
     
