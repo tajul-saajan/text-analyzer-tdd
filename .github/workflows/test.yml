@@ -2,7 +2,6 @@ name: CI - Docker Compose Test
 
 on:
   push:
-  pull_request:
 
 jobs:
   test:
@@ -11,6 +10,24 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
+      
+      - name: creates env file
+        run: |
+            echo "NODE_ENV=development" >> .env
+            echo "PORT=5050" >> .env
+            echo "EXPOSE_PORT=5050" >> .env
+            echo "CREDENTIALS=true" >> .env
+            echo "DB_HOST=mysql" >> .env
+            echo "DB_EXPOSE_PORT=3308" >> .env
+            echo "DB_PORT=3306" >> .env
+            echo "DB_DATABASE=text_analyzer" >> .env
+            echo "DB_USERNAME=tajul" >> .env
+            echo "DB_PASSWORD=dummy_pass" >> .env
+            echo "MYSQL_ROOT_PASSWORD=root" >> .env
+            echo "SECRET_KEY=\"jgksdlkfgldf\"" >> .env
+            echo "REDIS_HOST=redis" >> .env
+            echo "REDIS_PORT=6379" >> .env
+            echo "REDIS_EXPOSE_PORT=6389" >> .env
 
       - name: Set up Docker Compose
         run: docker compose up -d
