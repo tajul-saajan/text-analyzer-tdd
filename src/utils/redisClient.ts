@@ -1,14 +1,15 @@
 import { Redis } from 'ioredis';
 import { CacheInterface } from '@interfaces/cache.interface';
 import { Service } from 'typedi';
+import { REDIS_HOST, REDIS_PORT } from '@/config';
 
 @Service()
 class RedisClient implements CacheInterface {
   private redis: Redis;
   public constructor() {
     this.redis = new Redis({
-      host: 'localhost',
-      port: 6379,
+      host: REDIS_HOST,
+      port: +REDIS_PORT,
     });
   }
 
