@@ -39,7 +39,12 @@ jobs:
         run: docker compose exec app npm run db:seed
     
       - name: Run Tests
-        run: docker compose exec app npm run test
+        run: docker compose exec app npm run test:coverage
+      
+      - name: SonarQube Scan
+        uses: SonarSource/sonarqube-scan-action@v4
+        env:
+          SONAR_TOKEN: ${{ secrets. SONARCLOUD_TOKEN }}
 
       - name: Tear down
         run: docker compose down -v
