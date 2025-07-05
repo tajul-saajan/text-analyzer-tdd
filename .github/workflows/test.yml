@@ -40,6 +40,9 @@ jobs:
     
       - name: Run Tests
         run: docker compose exec app npm run test:coverage
+
+      - name: Copy reports from container
+        run: docker cp text-analyzer-tdd-app-1:/usr/src/app/coverage ./coverage && docker cp text-analyzer-tdd-app-1:/usr/src/app/junit.xml ./junit.xml
       
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@v4
