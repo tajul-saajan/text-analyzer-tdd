@@ -6,7 +6,7 @@ import { authenticate } from '@middlewares/auth.middleware';
 export class ReportRoute implements Routes {
   public path = '/report';
   public router = Router();
-  private controller: ReportController;
+  private readonly controller: ReportController;
 
   constructor() {
     this.controller = new ReportController();

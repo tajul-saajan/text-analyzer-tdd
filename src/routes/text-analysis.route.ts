@@ -7,7 +7,7 @@ export class TextAnalysisRoute implements Routes {
   public path = '/text-analysis/:text_id';
   public router = Router();
 
-  private textAnalysisController: TextAnalysisController;
+  private readonly textAnalysisController: TextAnalysisController;
 
   constructor() {
     this.textAnalysisController = new TextAnalysisController();

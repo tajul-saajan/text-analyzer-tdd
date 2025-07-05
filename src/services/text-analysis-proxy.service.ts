@@ -5,8 +5,8 @@ import { Container, Service } from 'typedi';
 
 @Service()
 export class TextAnalysisProxy {
-  private cache: CacheInterface;
-  private textAnalysisService: TextAnalysisService;
+  private readonly cache: CacheInterface;
+  private readonly textAnalysisService: TextAnalysisService;
 
   constructor() {
     this.cache = Container.get(RedisClient);
@@ -24,7 +24,7 @@ export class TextAnalysisProxy {
 
     console.log('cache miss');
 
-    const analysisResult = await this.textAnalysisService.performFullAnalysis(text);
+    const analysisResult = this.textAnalysisService.performFullAnalysis(text);
 
     await this.cache.set(cacheKey, JSON.stringify(analysisResult), 3600);
 

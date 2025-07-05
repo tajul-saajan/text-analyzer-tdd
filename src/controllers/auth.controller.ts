@@ -6,7 +6,7 @@ import { Container } from 'typedi';
 import { UserLoginDto } from '@dtos/user-login.dto';
 
 export class AuthController {
-  private authService: AuthService;
+  private readonly authService: AuthService;
 
   constructor() {
     this.authService = Container.get(AuthService);

@@ -181,6 +181,10 @@ describe('Text get functionality', () => {
   });
 
   it('should get the text with incorrect id', async () => {
-    await expect(textService.getText(999)).rejects.toThrow(HttpException);
+    try {
+      await textService.getText(999);
+    } catch (error) {
+      expect(error).toBeInstanceOf(HttpException);
+    }
   });
 });

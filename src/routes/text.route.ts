@@ -7,7 +7,7 @@ export class TextRoute implements Routes {
   public path = '/texts';
   public router = Router();
 
-  private textController: TextController;
+  private readonly textController: TextController;
 
   constructor() {
     this.textController = new TextController();

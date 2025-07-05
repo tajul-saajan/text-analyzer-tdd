@@ -5,7 +5,7 @@ import { REDIS_HOST, REDIS_PORT } from '@/config';
 
 @Service()
 class RedisClient implements CacheInterface {
-  private redis: Redis;
+  private readonly redis: Redis;
   public constructor() {
     this.redis = new Redis({
       host: REDIS_HOST,
