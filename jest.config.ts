@@ -28,7 +28,6 @@ const config: Config = {
   testPathIgnorePatterns: ['/node_modules/', '/dist/'],  // Ignore node_modules and dist
   setupFilesAfterEnv: ['<rootDir>/src/tests/setup.ts'],  // Optional setup file
   collectCoverage: true,  // Enable test coverage collection (optional)
-  reporters: ['default', 'jest-junit'],
 };
 
 export default config;
