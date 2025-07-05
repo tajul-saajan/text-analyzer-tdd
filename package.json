@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
+    "test:coverage": "jest --coverage",
     "start": "npm run build && cross-env NODE_ENV=production node dist/server.js",
     "dev": "NODE_ENV=development nodemon",
     "lint": "eslint src/",
