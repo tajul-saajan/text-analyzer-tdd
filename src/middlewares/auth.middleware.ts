@@ -4,7 +4,6 @@ import passport from 'passport';
 /* istanbul ignore next */
 export const authenticate = (req: Request, res: Response, next: NextFunction) => {
   passport.authenticate('jwt', { session: false }, (err, user) => {
-    console.log('error', err, 'user', user);
     if (err || !user) {
       return res.status(401).json({ message: 'Unauthorized' });
     }
