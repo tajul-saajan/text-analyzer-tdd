@@ -1,3 +1,4 @@
+import { SanitizeHtml } from '@/decorators/sanitizeHtml.decorator';
 import { IsString, IsNumber, ValidateIf, IsOptional, IsNotEmpty } from 'class-validator';
 
 export class TextDto {
@@ -5,6 +6,7 @@ export class TextDto {
   @IsString()
   @IsOptional()
   @IsNotEmpty()
+  @SanitizeHtml()
   text: string;
 
   @ValidateIf(body => !body.text)
