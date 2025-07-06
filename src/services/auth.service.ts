@@ -4,7 +4,7 @@ import { HttpException } from '@exceptions/httpException';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { Service } from 'typedi';
-import { SECRET_KEY } from '@config';
+import { ACCOUNT_LOCK_DURATION_MINUTES, ACCOUNT_LOCK_THRESHOLD, SECRET_KEY } from '@config';
 import { UserLoginDto } from '@dtos/user-login.dto';
 import logger from '@/utils/logger';
 
@@ -44,11 +44,23 @@ export class AuthService {
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
-      logger.warn(`Login failed. Incorrect password for email: ${email}`);
-      throw new HttpException(400, 'Invalid credentials');
+      user.failedLoginAttempts += 1;
+      let message = `Login failed. Incorrect password for email: ${email}`;
+
+      if (user.failedLoginAttempts >= ACCOUNT_LOCK_THRESHOLD) {
+        message = `User ${email} locked out due to too many failed login attempts`;
+        user.lockoutUntil = new Date(Date.now() + ACCOUNT_LOCK_DURATION_MINUTES); // Lockout for 15 minutes
+        await user.save();
+      }
+      logger.warn(message);
+      throw new HttpException(400, message);
     }
 
     logger.info(`User ${email} logged in successfully`);
+
+    user.failedLoginAttempts = 0; // Reset failed attempts on successful login
+    user.lockoutUntil = null; // Clear lockout time
+    await user.save();
 
     const token = jwt.sign({ userId: user.id }, SECRET_KEY, { expiresIn: '1h' });
 

@@ -14,6 +14,12 @@ export class User extends BaseEntity {
   @Column()
   password: string;
 
+  @Column({ default: 0 })
+  failedLoginAttempts: number;
+
+  @Column({ nullable: true })
+  lockoutUntil: Date;
+
   @CreateDateColumn()
   createdAt: Date;
 
