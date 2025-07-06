@@ -1,7 +1,10 @@
 name: CI - Docker Compose Test
 
 on:
-  push:
+  push: 
+    branches:
+      - main
+  pull_request:
 
 jobs:
   test:
@@ -42,6 +45,7 @@ jobs:
         run: docker compose exec app npm run test:coverage
 
       - name: SonarQube Scan
+        if: github.ref == 'refs/heads/main'
         uses: SonarSource/sonarqube-scan-action@v5
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
