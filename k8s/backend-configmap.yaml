@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: text-analyzer-backend-config
+  namespace: text-analyzer
+data:
+  NODE_ENV: "development"
+  PORT: "5050"
+  LOG_FORMAT: "combined"
+  LOG_DIR: "/app/logs"
+  ORIGIN: "*"
+  REDIS_HOST: "redis-service"
+  REDIS_PORT: "6379"
+  ACCOUNT_LOCK_THRESHOLD: "5"
+  ACCOUNT_LOCK_DURATION_MINUTES: "15"

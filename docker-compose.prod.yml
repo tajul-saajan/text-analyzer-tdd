@@ -1,0 +1,64 @@
+services:
+  app:
+    image: ta-prod
+    build: 
+      context: .
+      dockerfile: Dockerfile.prod
+    env_file:
+      - .env
+    environment:
+      NODE_ENV: production
+    ports:
+      - "${EXPOSE_PORT:-5050}:${PORT:-5050}"
+    depends_on:
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:${PORT:-5050}/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  redis:
+    image: redis:7-alpine
+    env_file:
+      - .env
+    ports:
+      - "${REDIS_EXPOSE_PORT:-6379}:${REDIS_PORT:-6379}"
+    volumes:
+      - redis_data_prod:/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+
+  mysql:
+    image: mysql:8.0
+    env_file:
+      - .env
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE:-text_analyzer}
+      MYSQL_USER: ${DB_USERNAME:-tajul}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-dummy_pass}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-dummy_pass}
+    ports:
+      - "${DB_EXPOSE_PORT:-3306}:${DB_PORT:-3306}"
+    volumes:
+      - mysql_data_prod:/var/lib/mysql
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+volumes:
+  redis_data_prod:
+  mysql_data_prod:

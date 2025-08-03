@@ -13,5 +13,9 @@ export class ExampleRoute implements Routes {
     this.router.get(`${this.path}hello`, (req, res) => {
       res.json('hello Express.js');
     });
+
+    this.router.get(`${this.path}health`, (req, res) => {
+      res.status(200).json('server is running');
+    });
   }
 }

@@ -4,7 +4,7 @@ import { ExampleRoute } from '@routes/example.route';
 import { TextRoute } from '@routes/text.route';
 import { ValidateEnv } from '@utils/validateEnv';
 import { createConnection } from 'typeorm';
-import config from '../ormconfig';
+import config from './ormconfig';
 import { TextAnalysisRoute } from '@routes/text-analysis.route';
 import { AuthRoute } from '@routes/auth.route';
 import { ReportRoute } from '@routes/report.route';
