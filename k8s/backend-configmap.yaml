@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: text-analyzer-backend-config
+  name: backend-config
   namespace: text-analyzer
 data:
   NODE_ENV: "development"

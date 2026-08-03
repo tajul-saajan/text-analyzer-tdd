@@ -23,9 +23,9 @@ spec:
         - containerPort: 5050
         envFrom:
         - configMapRef:
-            name: text-analyzer-backend-config
+            name: backend-config
         - secretRef:
-            name: text-analyzer-backend-secret
+            name: backend-secret
         resources:
           requests:
             memory: "256Mi"
