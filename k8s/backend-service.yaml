@@ -9,8 +9,8 @@ spec:
   selector:
     app: backend
   ports:
-  - port: 5050
-    targetPort: 5050
-    nodePort: 30050
+  - port: 5050 # service's own port
+    targetPort: 5050 # pod's port
+    nodePort: 30050 # the node's port
     protocol: TCP
   type: NodePort
